@@ -1,0 +1,24 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- AlterTable
+ALTER TABLE [dbo].[clients] ADD [created_at] DATETIME2 NOT NULL CONSTRAINT [clients_created_at_df] DEFAULT CURRENT_TIMESTAMP,
+[updated_at] DATETIME2;
+
+-- AlterTable
+ALTER TABLE [dbo].[users] ADD [created_at] DATETIME2 NOT NULL CONSTRAINT [users_created_at_df] DEFAULT CURRENT_TIMESTAMP,
+[updated_at] DATETIME2;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
